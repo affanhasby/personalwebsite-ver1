@@ -1,3 +1,34 @@
+<?php
+
+    $result="";
+    if(isset($_POST['submit'])){
+        require 'phpmailer\PHPMailerAutoload.php';
+        $mail = new PHPMailer;
+
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 587;
+        $mail->SMTPAuth = true;
+        $mail->SMTPSecure = 'tls';
+        $mail->Username = 'affanhasbycv@gmail.com';
+        $mail->Password = 'hasbyforever99';
+
+        $mail->setFrom('affanhasbycv@gmail.com');
+        $mail->addAddress('hasbyaffan@gmail.com');
+        $mail->addReplyTo($_POST['email'], $_POST['name'])
+
+        $mail->isHTML(true);
+        $mail->Body = "<h3>Name : '.$_POST['name'] <br>Email : '.$_POST['email'] <br>Message : '.$_POST['text']</h3>";
+
+        if(!$mail->send()){
+            $result="salah";
+        }
+        else{
+            $result="bener";
+        }
+
+    }
+?>
+
 <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -125,6 +156,7 @@
             <section class="contact section" id="contact">
                 <h2 class="section-title">Contact</h2>
 
+                <h5 class="text-center text-success"><?=$result; ?></h5>
                 <div class="contact__container bd-grid">
                     <div class="contact__info">
                         <h3 class="contact__subtitle">EMAIL</h3>
@@ -136,11 +168,11 @@
 
                     <form action="" class="contact__form">
                         <div class="contact__inputs">
-                            <input type="text" placeholder="Name" class="contact__input">
-                            <input type="mail" placeholder="Email" class="contact__input">
+                            <input type="text" placeholder="name" class="contact__input">
+                            <input type="mail" placeholder="email" class="contact__input">
                         </div>
 
-                        <textarea name="" id="" cols="0" rows="10" class="contact__input"></textarea>
+                        <textarea name="text" id="" cols="0" rows="10" class="contact__input"></textarea>
 
                         <input type="submit" value="Send" class="contact__button">
                     </form>
